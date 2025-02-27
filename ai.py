@@ -2,7 +2,6 @@ import os
 import json
 import requests
 import streamlit as st
-import tomli  # TOML parsing library
 import time
 from datetime import datetime
 import uuid
@@ -10,39 +9,16 @@ from authlib.integrations.requests_client import OAuth2Session
 import webbrowser
 from urllib.parse import urlencode
 
-def load_config():
-    """Load configuration from config.toml file"""
-    try:
-        # Try loading from config.toml in the same directory
-        with open('config.toml', 'rb') as f:
-            config = tomli.load(f)
-        return config
-    except FileNotFoundError:
-        st.error("Configuration file 'config.toml' not found. Please create the configuration file.")
-        return None
-    except tomli.TOMLDecodeError:
-        st.error("Error parsing config.toml file. Please check its format.")
-        return None
+# Direktkonfiguration für API-Keys und Auth0
+PRIMARY_API_KEY = "AIzaSyDDJzdMzGfh40Nk3k56Z_BPmBLVTQO8a4I"
+BACKUP_API_KEY_1 = "AIzaSyDPigg8w6oUa4vaY3AlyLH2gM3PWlWyFfg"
+BACKUP_API_KEY_2 = "AIzaSyBrf4itoajR2PygPtu6P4438gxWe2iD8qU"
 
-# Load configuration
-config = load_config()
-
-if not config:
-    st.error("Could not load configuration. Please check your config file.")
-    st.stop()
-
-# Extract configuration values
-PRIMARY_API_KEY = config['api_keys'].get('primary')
-BACKUP_API_KEY_1 = config['api_keys'].get('backup_1')
-BACKUP_API_KEY_2 = config['api_keys'].get('backup_2')
-
-# Auth0 Configuration
-AUTH0_CLIENT_ID = config['auth0']['client_id']
-AUTH0_CLIENT_SECRET = config['auth0']['client_secret']
-AUTH0_DOMAIN = config['auth0']['domain']
-AUTH0_CALLBACK_URL = config['auth0']['callback_url']
-
-
+# Auth0 Konfiguration
+AUTH0_CLIENT_ID = "mqllsmPwebdZQR8OjgoTUbTudUtKGQrZ"
+AUTH0_CLIENT_SECRET = "CbiJwF98Yfy3rxyjEBOnmDVjlitT2hHcp6HKVM6q-qRA4EkppL8x6Ap475vdnYvO"
+AUTH0_DOMAIN = "dev-oda6m7hebn5z0o2a.us.auth0.com"
+AUTH0_CALLBACK_URL = "http://localhost:8501"
 # Seitenkonfiguration
 st.set_page_config(
     page_title="NeuraX",
